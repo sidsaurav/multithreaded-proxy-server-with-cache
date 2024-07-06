@@ -1,18 +1,42 @@
-## Getting Started
+Sample HTTP GET request:
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+```
+    GET /path/to/resource HTTP/1.1
+    Host: www.example.com
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+    Accept: text/html,application/xhtml+xml
+```
 
-## Folder Structure
+Sample HTTP POST request:
 
-The workspace contains two folders by default, where:
+```
+    POST /path/to/resource HTTP/1.1
+    Host: www.example.com
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+    Accept: text/html,application/xhtml+xml
+    Content-Type: application/x-www-form-urlencoded
+    Content-Length: 13
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+    name=John+Doe
+```
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+Sample HTTP Response:
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+```
+    HTTP/1.1 200 OK
+    Date: Sun, 07 Jul 2024 12:00:00 GMT
+    Server: Apache/2.4.41 (Ubuntu)
+    Content-Type: text/html; charset=UTF-8
+    Content-Length: 1234
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Sample Response</title>
+    </head>
+    <body>
+        <h1>Hello, World!</h1>
+        <p>This is the content of the response...</p>
+    </body>
+    </html>
+```
