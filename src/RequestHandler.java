@@ -3,9 +3,11 @@ import java.net.*;
 
 class RequestHandler implements Runnable {
     private final Socket clientSocket;
+    private final LRUCache cache;
 
-    public RequestHandler(Socket socket) {
+    public RequestHandler(Socket socket, LRUCache cache) {
         this.clientSocket = socket;
+        this.cache = cache;
     }
 
     @Override
@@ -16,7 +18,7 @@ class RequestHandler implements Runnable {
             String request = in.readLine();
             if (request != null && request.startsWith("GET")) {
                 String apiUrl = extractApiUrl(request);
-                String response = makeApiCall(apiUrl);
+                String response = getResponseWithCaching(apiUrl);
                 out.println("HTTP/1.1 200 OK");
                 out.println("Content-Type: application/json");
                 out.println();
@@ -41,6 +43,18 @@ class RequestHandler implements Runnable {
             return parts[1].substring(1); // Remove leading '/'
         }
         return "";
+    }
+
+    private String getResponseWithCaching(String apiUrl) {
+        String cachedResponse = cache.get(apiUrl);
+        if (cachedResponse != null) {
+            System.out.println("Cache HIT for: " + apiUrl);
+            return cachedResponse;
+        }
+        System.out.println("Cache MISS for: " + apiUrl);
+        String response = makeApiCall(apiUrl);
+        cache.put(apiUrl, response);
+        return response;
     }
 
     private String makeApiCall(String apiUrl) {
