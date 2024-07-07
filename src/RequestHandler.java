@@ -12,6 +12,7 @@ class RequestHandler implements Runnable {
 
     @Override
     public void run() {
+        long startTime = System.currentTimeMillis();
         try (
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
@@ -34,6 +35,9 @@ class RequestHandler implements Runnable {
             } catch (IOException e) {
                 System.err.println("Error closing client socket: " + e.getMessage());
             }
+            long endTime = System.currentTimeMillis();
+            System.out.println("Time taken: " + (endTime - startTime) + " ms");
+            System.out.println("---------------------------------------------------------");
         }
     }
 
@@ -46,14 +50,17 @@ class RequestHandler implements Runnable {
     }
 
     private String getResponseWithCaching(String apiUrl) {
+        long startTime = System.currentTimeMillis();
         String cachedResponse = cache.get(apiUrl);
         if (cachedResponse != null) {
-            System.out.println("Cache HIT for: " + apiUrl);
+            long endTime = System.currentTimeMillis();
+            System.out.println("Cache hit for: " + apiUrl);
             return cachedResponse;
         }
-        System.out.println("Cache MISS for: " + apiUrl);
+        System.out.println("Cache miss for: " + apiUrl);
         String response = makeApiCall(apiUrl);
         cache.put(apiUrl, response);
+        long endTime = System.currentTimeMillis();
         return response;
     }
 
