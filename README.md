@@ -1,3 +1,19 @@
+## ABOUT
+
+This project implements a multithreaded proxy server with caching capabilities using Java. The server handles multiple client requests concurrently and caches responses to improve performance for subsequent requests.
+
+## Features
+### Multithreading: 
+Handles multiple client requests simultaneously using a fixed thread pool.
+### LRU Cache: 
+Caches responses with a Least Recently Used (LRU) eviction policy.
+### HTTP Support: 
+Supports basic HTTP GET and POST requests.
+
+
+
+===============================================================
+
 Sample HTTP GET request:
 
 ```
